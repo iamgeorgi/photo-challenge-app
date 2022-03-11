@@ -1,0 +1,155 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema photocontest
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema photocontest
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `photocontest` DEFAULT CHARACTER SET latin1 ;
+USE `photocontest` ;
+
+-- -----------------------------------------------------
+-- Table `photocontest`.`contests`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `photocontest`.`contests` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `category` VARCHAR(45) NOT NULL,
+  `isopen` TINYINT(4) NOT NULL,
+  `phase1` DATETIME NOT NULL,
+  `phase2` INT(11) NOT NULL,
+  `start_date` DATETIME NOT NULL,
+  `photo` VARCHAR(256) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `photocontest`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `photocontest`.`users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `firstname` VARCHAR(45) NOT NULL,
+  `lastname` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `points` INT(11) NULL DEFAULT NULL,
+  `role` ENUM('Organizer', 'Photo Junkie') NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `photocontest`.`user_submit`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `photocontest`.`user_submit` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `story` VARCHAR(256) NOT NULL,
+  `photo` VARCHAR(256) NULL DEFAULT NULL,
+  `users_id` INT(11) NOT NULL,
+  `contests_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`, `users_id`, `contests_id`),
+  INDEX `fk_user_submit_users_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_user_submit_contests1_idx` (`contests_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_submit_contests1`
+    FOREIGN KEY (`contests_id`)
+    REFERENCES `photocontest`.`contests` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_submit_users`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `photocontest`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `photocontest`.`jury_scoring`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `photocontest`.`jury_scoring` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `score` INT(11) NOT NULL,
+  `comment` VARCHAR(256) NOT NULL,
+  `wrong_category` TINYINT(4) NULL DEFAULT 0,
+  `user_submit_id` INT(11) NOT NULL,
+  `users_id` INT(11) NOT NULL,
+  `contests_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`, `user_submit_id`, `users_id`, `contests_id`),
+  INDEX `fk_jury_scoring_user_submit1_idx` (`user_submit_id` ASC) VISIBLE,
+  INDEX `fk_jury_scoring_users1_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_jury_scoring_contests1_idx` (`contests_id` ASC) VISIBLE,
+  CONSTRAINT `fk_jury_scoring_contests1`
+    FOREIGN KEY (`contests_id`)
+    REFERENCES `photocontest`.`contests` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_jury_scoring_user_submit1`
+    FOREIGN KEY (`user_submit_id`)
+    REFERENCES `photocontest`.`user_submit` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_jury_scoring_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `photocontest`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `photocontest`.`private_users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `photocontest`.`private_users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `users_id` INT(11) NULL DEFAULT NULL,
+  `contests_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `users_id` (`users_id` ASC) VISIBLE,
+  INDEX `contests_id` (`contests_id` ASC) VISIBLE,
+  CONSTRAINT `private_users_ibfk_1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `photocontest`.`users` (`id`),
+  CONSTRAINT `private_users_ibfk_2`
+    FOREIGN KEY (`contests_id`)
+    REFERENCES `photocontest`.`contests` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- -----------------------------------------------------
+-- Table `photocontest`.`users_has_contests`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `photocontest`.`users_has_contests` (
+  `users_id` INT(11) NOT NULL,
+  `contests_id` INT(11) NOT NULL,
+  PRIMARY KEY (`users_id`, `contests_id`),
+  INDEX `fk_users_has_contests_contests1_idx` (`contests_id` ASC) VISIBLE,
+  INDEX `fk_users_has_contests_users1_idx` (`users_id` ASC) VISIBLE,
+  CONSTRAINT `fk_users_has_contests_contests1`
+    FOREIGN KEY (`contests_id`)
+    REFERENCES `photocontest`.`contests` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_users_has_contests_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `photocontest`.`users` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

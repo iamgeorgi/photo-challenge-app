@@ -1,0 +1,48 @@
+.btn-primary {
+  color: #fff;
+  background-color: rgb(193, 155, 118) !important;
+  border-color: rgb(163, 132, 100) !important;
+  border-style: none !important;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: rgb(193, 155, 118) !important;
+  border-color: rgb(163, 132, 100) !important;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  color: #fff;
+  background-color: rgb(193, 155, 118) !important;
+  border-color: rgb(163, 132, 100) !important;
+  box-shadow: 0 0 0 0.2rem rgb(212, 188, 164) !important;
+  ;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: rgb(193, 155, 118) !important;
+  border-color: rgb(163, 132, 100) !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show>.btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: rgb(193, 155, 118) !important;
+  border-color: rgb(163, 132, 100) !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgb(211, 185, 159) !important;
+}
+
+.form-control:focus {
+  border-color: rgb(245, 230, 214) !important;
+  box-shadow: 0 0 0 0.2rem rgb(236, 227, 217) !important;
+}
+
+.table .thead-light th {
+  color: rgb(253, 253, 253) !important;
+  background-color:rgb(193, 155, 118) !important;
+  border-style: none !important;
+}
+

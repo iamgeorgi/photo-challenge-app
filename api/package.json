@@ -1,0 +1,42 @@
+{
+  "name": "photo-contest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon app.js",
+    "eslint:fix": "eslint . --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.4.2",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.5",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.11.5",
+    "@types/bcrypt": "^3.0.0",
+    "@types/eslint": "^7.2.3",
+    "@types/express": "^4.17.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/nodemon": "^1.19.0",
+    "@types/passport": "^1.0.4",
+    "@types/passport-jwt": "^3.0.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.9.0",
+    "jsdoc": "^3.6.6"
+  }
+}

@@ -1,0 +1,36 @@
+insert into contests(id, title, category, resume, isopen, phase1, phase2, start_date)
+values(1, 'Incredible abstracts','Abstraction',
+'Take a closer look at the world around you to find exciting details. These can be captured with a macro lens, telephoto zoom or even a super wideangle. Anything goes, as long as it’s unusual and thought provoking.',
+1, DATE_ADD(NOW(), INTERVAL 5 DAY), MAKETIME(8, 00, 0) , NOW());
+
+insert into contests(id, title, category, resume, isopen, phase1, phase2, start_date)
+values(2, 'Statues','Statues',
+'In this contest I want to see your photos of statues. The statues can be of any subject such as an important person, to represent an important event, or an animal. Statues can be found in most towns and cities in one form or another.',
+1, DATE_ADD(NOW(), INTERVAL 10 DAY), MAKETIME(15, 00, 0) , NOW());
+
+insert into contests(id, title, category, resume, isopen, phase1, phase2, start_date)
+values(3, 'Panoramas','Landscapes',
+'I would like to see your panoramic photos. Panoramic images will show a wide angle view of the subject in a long, thin image. ',
+1, DATE_ADD(NOW(), INTERVAL 12 DAY), MAKETIME(22, 00, 0) , NOW());
+
+insert into user_submit(title, story, photo,users_id, contests_id)
+values('myFav','Some story','some picture',3,2);
+insert into user_submit(title, story, photo,users_id, contests_id)
+values('myFav2','Some story2','some picture2',4,2);
+insert into user_submit(title, story, photo,users_id, contests_id)
+values('myFav3','Some story3','some picture3',3,2);
+insert into user_submit(title, story, photo,users_id, contests_id)
+values('myFav4','Some story4','some picture4',4,2);
+
+insert into jury_scoring(score, comment, user_submit_id, users_id, contests_id)
+values(7,'very nice', 3,1,2);
+insert into jury_scoring(score, comment, user_submit_id, users_id, contests_id)
+values(3,'very good', 3,2,2);
+insert into jury_scoring(score, comment, user_submit_id, users_id, contests_id)
+values(8,'not bad', 3,1,2);
+insert into jury_scoring(score, comment, user_submit_id, users_id, contests_id)
+values(5,'OK', 4,1,2);
+insert into jury_scoring(score, comment, user_submit_id, users_id, contests_id)
+values(9,'good picture', 4,2,2);
+insert into jury_scoring(score, comment, user_submit_id, users_id, contests_id)
+values(2,'wonderful', 4,1,2);
